@@ -127,9 +127,9 @@ function ENT:Initialize()
         if self:BeingLookedAtByLocalPlayer() and self:GetPos():Distance(LocalPlayer():GetPos()) < 128 and self:GetGameState() < 1 then
             if !self:getPlayerKey(LocalPlayer()) then
                 surface.SetFont("gpoker_bold")
-                local plyHeader = "Players: "
-                local startHeader = "Starting Value: "
-                local entryHeader = "Entry Fee: "
+                local plyHeader = "Игроков: "
+                local startHeader = "Начальная сумма: "
+                local entryHeader = "Входная ставка: "
         
                 local plyW, _ = surface.GetTextSize(plyHeader)
                 local startW, _ = surface.GetTextSize(startHeader)
@@ -160,9 +160,9 @@ function ENT:Initialize()
                     if v:getPlayerKey(LocalPlayer()) then canJoin = false break end
                 end
             
-                local text = "Press [" .. string.upper(input.LookupBinding("+use")) .. "] to join."
-                if !canJoin then text = "Cannot join - already in a match." end
-                if #self.players >= self:GetMaxPlayers() and (!self:GetBotsPlaceholder()) then text = "Cannot join - match full" end
+                local text = "Нажми [" .. string.upper(input.LookupBinding("+use")) .. "] для входа."
+                if !canJoin then text = "Ты не можешь войти, пока идёт раздача." end
+                if #self.players >= self:GetMaxPlayers() and (!self:GetBotsPlaceholder()) then text = "Стол переполнен." end
                 draw.SimpleText(text, "gpoker_bold", x, y + bH / 2 - pad, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_BOTTOM)
             end
         end
@@ -214,7 +214,7 @@ function ENT:Initialize()
 
 
 
-                local sideW, sideH = 100, height
+                local sideW, sideH = 150, height
 
                 surface.SetDrawColor(Color(37,37,37, 225))
                 surface.DrawRect(ScrW()/2 + width/2, ScrH() - height + 2, sideW, sideH)
@@ -224,7 +224,7 @@ function ENT:Initialize()
 
 
                 surface.SetFont("gpoker_header")
-                local money, bet, pot = gPoker.betType[self:GetBetType()].name .. ": ", "Bet: ", "Pot: "
+                local money, bet, pot = gPoker.betType[self:GetBetType()].name .. ": ", "Ставка: ", "На столе: "
                 local moneyW, headH = surface.GetTextSize(money)
 
                 surface.DrawOutlinedRect(ScrW()/2 + width/2, ScrH() - height + 2, sideW, 5 + headH, 2)
@@ -267,9 +267,9 @@ function ENT:Initialize()
                     state = gPoker.gameType[self:GetGameType()].states[self:GetGameState()].text
                 end
             elseif self:GetGameState() == 0 then
-                state = "Intermission"
+                state = "Перерыв"
             else
-                state = "Waiting for players"
+                state = "Ожидание игроков"
             end
 
             draw.SimpleText(gPoker.gameType[self:GetGameType()].name, "gpoker_header", ScrW()/2, 15, color_white, TEXT_ALIGN_CENTER, TEXT_ALIGN_CENTER)
@@ -293,7 +293,7 @@ function ENT:openEntryFeeDerma()
     local w, h = 300, 150
 
     local win = vgui.Create("DFrame")
-    win:SetTitle("Pay the entry fee")
+    win:SetTitle("Внести ставку")
     win:SetSize(w, h)
     win:Center()
     win:SetVisible(true)
@@ -321,7 +321,7 @@ function ENT:openEntryFeeDerma()
     pay:SetPos(2, 20)
     pay:SetFont("gpoker_header")
     pay:SetTextColor(color_white)
-    pay:SetText("Pay ante")
+    pay:SetText("Внести")
     pay.Paint = function(self, w, h)
         if self:IsHovered() then
             surface.SetDrawColor(Color(71,133,198))
@@ -357,7 +357,7 @@ function ENT:openEntryFeeDerma()
     leave:SetPos(w/2, 20)
     leave:SetFont("gpoker_header")
     leave:SetTextColor(color_white)
-    leave:SetText("Leave")
+    leave:SetText("Выйти")
     leave.Paint = function(self, w, h)
         if self:IsHovered() then
             surface.SetDrawColor(Color(71,133,198))
@@ -381,7 +381,7 @@ end
 
 
 function ENT:openBettingDerma(check, curbet)
-    local w, h = 300, 150
+    local w, h = 400, 150
 
     local win = vgui.Create("DFrame")
     win:SetTitle("")
@@ -419,7 +419,7 @@ function ENT:openBettingDerma(check, curbet)
         check:SetPos(2, 20)
         check:SetFont("gpoker_header")
         check:SetTextColor(color_white)
-        check:SetText("Check")
+        check:SetText("Чек")
         check.Paint = function(self, w, h)
             if self:IsHovered() then
                 surface.SetDrawColor(Color(71,133,198))
@@ -449,7 +449,7 @@ function ENT:openBettingDerma(check, curbet)
         bet:SetPos(w/2 + 2, 20)
         bet:SetFont("gpoker_header")
         bet:SetTextColor(clr)
-        bet:SetText("Bet")
+        bet:SetText("Ставка")
         bet.Paint = function(self, w, h)
             if !canBet then
                 surface.SetDrawColor(Color(30,30,30))
@@ -480,7 +480,7 @@ function ENT:openBettingDerma(check, curbet)
             betButton:SetPos(w - (h-20)/2,20)
             betButton:SetFont("gpoker_header")
             betButton:SetTextColor(color_white)
-            betButton:SetText("Bet")
+            betButton:SetText("Ставка")
             betButton.Paint = function(self, w, h)
                 if self:IsHovered() then
                     surface.SetDrawColor(Color(71,133,198))
@@ -508,7 +508,7 @@ function ENT:openBettingDerma(check, curbet)
             backButton:SetPos(w - (h-20)/2, 20 + (h-20)/2)
             backButton:SetFont("gpoker_header")
             backButton:SetTextColor(color_white)
-            backButton:SetText("Back")
+            backButton:SetText("Назад")
             backButton.Paint = function(self, w, h)
                 if self:IsHovered() then
                     surface.SetDrawColor(Color(71,133,198))
@@ -537,7 +537,7 @@ function ENT:openBettingDerma(check, curbet)
         call:SetPos(2, 20)
         call:SetFont("gpoker_header")
         call:SetTextColor(color_white)
-        call:SetText("Call")
+        call:SetText("Колл")
         call.Paint = function(self, w, h)
             if self:IsHovered() then
                 surface.SetDrawColor(Color(71,133,198))
@@ -572,7 +572,7 @@ function ENT:openBettingDerma(check, curbet)
         fold:SetPos(w/3, 20)
         fold:SetFont("gpoker_header")
         fold:SetTextColor(color_white)
-        fold:SetText("Fold")
+        fold:SetText("Фолд")
         fold.Paint = function(self, w, h)
             if self:IsHovered() then
                 surface.SetDrawColor(Color(71,133,198))
@@ -602,7 +602,7 @@ function ENT:openBettingDerma(check, curbet)
         raise:SetPos(w/3*2 - 2, 20)
         raise:SetFont("gpoker_header")
         raise:SetTextColor(clr)
-        raise:SetText("Raise")
+        raise:SetText("Повысить")
         raise.Paint = function(self, w, h)
             if !canRaise then
                 surface.SetDrawColor(Color(30,30,30))
@@ -633,7 +633,7 @@ function ENT:openBettingDerma(check, curbet)
             raiseButton:SetPos(w - (h-20)/2,20)
             raiseButton:SetFont("gpoker_header")
             raiseButton:SetTextColor(color_white)
-            raiseButton:SetText("Raise")
+            raiseButton:SetText("Повысить")
             raiseButton.Paint = function(self, w, h)
                 if self:IsHovered() then
                     surface.SetDrawColor(Color(71,133,198))
@@ -661,7 +661,7 @@ function ENT:openBettingDerma(check, curbet)
             backButton:SetPos(w - (h-20)/2, 20 + (h-20)/2)
             backButton:SetFont("gpoker_header")
             backButton:SetTextColor(color_white)
-            backButton:SetText("Back")
+            backButton:SetText("Назад")
             backButton.Paint = function(self, w, h)
                 if self:IsHovered() then
                     surface.SetDrawColor(Color(71,133,198))
@@ -687,6 +687,7 @@ function ENT:openBettingDerma(check, curbet)
             fold:Hide()
         end
     end
+
 end
 
 
@@ -769,7 +770,7 @@ function ENT:openExchangeDerma()
     button:SetSize(w,h * 0.4)
     button:SetFont("gpoker_header")
     button:SetTextColor(color_white)
-    button:SetText("Exchange")
+    button:SetText("Обмен")
     button.Paint = function(self, w, h)
         if self:IsHovered() then
             surface.SetDrawColor(Color(71,133,198))
@@ -802,7 +803,7 @@ function ENT:openLeaveRequest()
     local win = vgui.Create("DFrame")
     win:SetSize(w,h)
     win:Center()
-    win:SetTitle("Do you want to leave the match?")
+    win:SetTitle("Ты хочешь выйти из-за стола?")
     win:SetDraggable(false)
     win:ShowCloseButton(false)
     win.Paint = function(self, w, h)
@@ -824,7 +825,7 @@ function ENT:openLeaveRequest()
     local y = vgui.Create("DButton", win)
     y:SetFont("gpoker_header")
     y:SetTextColor(color_white)
-    y:SetText("Leave")
+    y:SetText("Выйти")
     y:SetSize(100,100)
     y:SetPos(0,20)
     y.Paint = function(self, w, h)
@@ -853,7 +854,7 @@ function ENT:openLeaveRequest()
     local n = vgui.Create("DButton", win)
     n:SetFont("gpoker_header")
     n:SetTextColor(color_white)
-    n:SetText("Cancel")
+    n:SetText("Отмена")
     n:SetSize(100,100)
     n:SetPos(100,20)
     n.Paint = function(self, w, h)

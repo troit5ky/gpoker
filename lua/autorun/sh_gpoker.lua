@@ -383,7 +383,7 @@ function gPoker.fancyDeckStrength(st,vl)
     elseif st == 1 then
         text = "Пара "
         local pairText = ""
-        if vl == 4 then pairText = "Шестёрок" else pairText = gPoker.rank[vl] end
+        if vl == 4 then pairText = "Шесть" else pairText = gPoker.rank[vl] end
 
         text = text .. pairText
     elseif st == 2 then
@@ -393,15 +393,15 @@ function gPoker.fancyDeckStrength(st,vl)
 
         local highPairStr, lowPairStr
 
-        if highPair == 4 then highPairStr = "Шестёрок" else highPairStr = gPoker.rank[highPair] end
-        if lowPair == 4 then lowPairStr = "Шестёрок" else lowPairStr = gPoker.rank[lowPair] end
+        if highPair == 4 then highPairStr = "Шесть" else highPairStr = gPoker.rank[highPair] end
+        if lowPair == 4 then lowPairStr = "Шесть" else lowPairStr = gPoker.rank[lowPair] end
 
         local pairsText = highPairStr .. " и " .. lowPairStr
         text = text .. pairsText
     elseif st == 3 then
         text = "Сет, "
         local threeText = ""
-        if vl == 4 then threeText = "Шестёрок" else threeText = gPoker.rank[vl] end
+        if vl == 4 then threeText = "Шесть" else threeText = gPoker.rank[vl] end
 
         text = text .. threeText
     elseif st == 4 then
@@ -414,15 +414,15 @@ function gPoker.fancyDeckStrength(st,vl)
         local pair = math.Round((vl - threeKind) * 100)
         local threeKindStr, pairStr
 
-        if threeKind == 4 then threeKindStr = "Шестёрок" else threeKindStr = gPoker.rank[threeKind] end
-        if pair == 4 then pairStr = "Шестёрок" else pairStr = gPoker.rank[pair] end
+        if threeKind == 4 then threeKindStr = "Шесть" else threeKindStr = gPoker.rank[threeKind] end
+        if pair == 4 then pairStr = "Шесть" else pairStr = gPoker.rank[pair] end
 
         local fullText =  threeKindStr .. " свыше " .. pairStr
         text = text .. fullText
     elseif st == 7 then
         text = "Каре, "
         local fourText = ""
-        if vl == 0 then fourText = "Двоек" elseif vl == 4 then fourText = "Шестёрок" else fourText = gPoker.rank[vl] end
+        if vl == 0 then fourText = "Двоек" elseif vl == 4 then fourText = "Шесть" else fourText = gPoker.rank[vl] end
         text = text .. fourText
     elseif st == 8 then
         text = "Стрит Флэш, " .. gPoker.rank[vl] .. " старшая карта"
