@@ -16,24 +16,24 @@ gPoker.gameType = {
         available   = true,         --Is available?
         states      = {             --(NOTE: Begins AFTER the intermission timer) List of all actions
             [1] = {
-                text    = "Entry Fee",
+                text    = "Ставки открыты",
                 func    = function(e) if CLIENT then return end e:entryFee() end  
             },
             [2] = {
-                text    = "Dealing Cards...",           --Text to be displayed at the top, can also be function
+                text    = "Раздача карт...",           --Text to be displayed at the top, can also be function
                 func    = function(e) if CLIENT then return end e:beginRound() end --Function that will run on the table
             },
             [3] = {
-                text    = "Betting Round",
+                text    = "Принимаются ставки",
                 func    = function(e) if CLIENT then return end e:bettingRound() end
             },
             [4] = {
-                text    = "Drawing Round",
+                text    = "Обмен",
                 func    = function(e) if CLIENT then return end e:drawingRound() end,
                 drawing = true
             },
             [5] = {
-                text    = "Last Betting Round",
+                text    = "Последние ставки",
                 func    = function(e) if CLIENT then return end e:bettingRound() end
             },
             [6] = {
@@ -44,7 +44,7 @@ gPoker.gameType = {
 
                     local t
                     if win:IsPlayer() then t = win:Nick() else t = win:GetBotName() end
-                    t =  t .. " has: "
+                    t =  "в руке у " .. t .. ": "
 
                     if e.players[e:GetWinner()].strength and e.players[e:GetWinner()].value then
                         t = t .. gPoker.fancyDeckStrength(e.players[e:GetWinner()].strength, e.players[e:GetWinner()].value)
@@ -63,9 +63,9 @@ gPoker.gameType = {
 
                     local win = Entity(e.players[e:GetWinner()].ind)
 
-                    if !IsValid(win) then return "Winner: " end
+                    if !IsValid(win) then return "Победитель: " end
 
-                    local t = "Winner: "
+                    local t = "Победитель: "
                     if win:IsPlayer() then t = t .. win:Nick() else t = t .. win:GetBotName() end
                     t = t .. ", " .. gPoker.fancyDeckStrength(e.players[e:GetWinner()].strength, e.players[e:GetWinner()].value)
 
@@ -85,39 +85,39 @@ gPoker.gameType = {
         available   = true,
         states      = {
             [1] = {
-                text = "Entry Fee",
+                text = "Ставки открыты",
                 func = function(e) if CLIENT then return end e:entryFee() end
             },
             [2] = {
-                text = "Dealing Cards...",
+                text = "Раздача карт...",
                 func = function(e) if CLIENT then return end e:beginRound() end
             },
             [3] = {
-                text = "First Bet",
+                text = "Первая ставка",
                 func = function(e) if CLIENT then return end e:bettingRound() end
             },
             [4] = {
-                text = "Revealing the Flop",
+                text = "Вскрытие первой троицы",
                 func = function(e) if CLIENT then return end e:revealCommunityCards({1,2,3}) end
             },
             [5] = {
-                text = "Second Bet",
+                text = "Вторая ставка",
                 func = function(e) if CLIENT then return end e:bettingRound() end
             },
             [6] = {
-                text = "Revealing the Turn",
+                text = "Вскрытие четвёртой карты",
                 func = function(e) if CLIENT then return end e:revealCommunityCards(4) end
             },
             [7] = {
-                text = "Third Bet",
+                text = "Третия ставка",
                 func = function(e) if CLIENT then return end e:bettingRound() end
             },
             [8] = {
-                text = "Revealing the River",
+                text = "Вскрытие последней карты",
                 func = function(e) if CLIENT then return end e:revealCommunityCards(5) end
             },
             [9] = {
-                text = "Last Bet",
+                text = "Последняя ставка",
                 func = function(e) if CLIENT then return end e:bettingRound() end
             },
             [10] = {
@@ -128,7 +128,7 @@ gPoker.gameType = {
 
                     local t
                     if win:IsPlayer() then t = win:Nick() else t = win:GetBotName() end
-                    t =  t .. " has: "
+                    t =  "в руке у " .. t .. ": "
 
                     if e.players[e:GetWinner()].strength and e.players[e:GetWinner()].value then
                         t = t .. gPoker.fancyDeckStrength(e.players[e:GetWinner()].strength, e.players[e:GetWinner()].value)
@@ -147,9 +147,9 @@ gPoker.gameType = {
 
                     local win = Entity(e.players[e:GetWinner()].ind)
 
-                    if !IsValid(win) then return "Winner: " end
+                    if !IsValid(win) then return "Победитель: " end
 
-                    local t = "Winner: "
+                    local t = "Победитель: "
                     if win:IsPlayer() then t = t .. win:Nick() else t = t .. win:GetBotName() end
                     t = t .. ", " .. gPoker.fancyDeckStrength(e.players[e:GetWinner()].strength, e.players[e:GetWinner()].value)
 
@@ -164,7 +164,7 @@ gPoker.gameType = {
 //Poker bets
 gPoker.betType = {
     [0] = {
-        name        = "Money",                              --Name
+        name        = "Деньги",                              --Name
         fix         = "$",                                  --Text after value
         canSet      = engine.ActiveGamemode() != "darkrp",  --Can players set the amount of value each player gets in the spawn derma?
         setMinMax   = {min = 0, max = 10000},                --The minimum and maximum number of starting value (if uses)
@@ -240,7 +240,7 @@ gPoker.betType = {
     },
 
     [1] = {
-        name        = "Health",
+        name        = "Здоровье",
         fix         = "HP",
         canSet      = false,
         setMinMax   = {min = 0, max = 0},
@@ -311,39 +311,39 @@ for s = 0, 3 do
 end
 
 gPoker.suit = {
-    [0] = "Club",
-    [1] = "Diamond",
-    [2] = "Heart",
-    [3] = "Spade"
+    [0] = "Треф",
+    [1] = "Буб",
+    [2] = "Черви",
+    [3] = "Пики"
 }
 
 gPoker.rank = {
-    [0] = "Two",
-    [1] = "Three",
-    [2] = "Four",
-    [3] = "Five",
-    [4] = "Six",
-    [5] = "Seven",
-    [6] = "Eight",
-    [7] = "Nine",
-    [8] = "Ten",
-    [9] = "Jack",
-    [10] = "Queen",
-    [11] = "King",
-    [12] = "Ace"
+    [0] = "Два",
+    [1] = "Три",
+    [2] = "Четыре",
+    [3] = "Пять",
+    [4] = "Шесть",
+    [5] = "Семь",
+    [6] = "Восемь",
+    [7] = "Девять",
+    [8] = "Десять",
+    [9] = "Валет",
+    [10] = "Дама",
+    [11] = "Король",
+    [12] = "Туз"
 }
 
 gPoker.strength = {
-    [0] = "High Card",
-    [1] = "Pair",
-    [2] = "Two Pairs",
-    [3] = "Three of a Kind",
-    [4] = "Straight",
-    [5] = "Flush",
-    [6] = "Full House",
-    [7] = "Four of a Kind",
-    [8] = "Straight Flush",
-    [9] = "Royal Flush"
+    [0] = "Старшая карта",
+    [1] = "Пара",
+    [2] = "Две пары",
+    [3] = "Сет",
+    [4] = "Стрит",
+    [5] = "Флэш",
+    [6] = "Фул-Хаус",
+    [7] = "Каре",
+    [8] = "Стрит Флеш",
+    [9] = "Флэш-Рояль"
 }
 
 //Bots section//
@@ -351,7 +351,7 @@ gPoker.strength = {
 gPoker.bots = {}
 
 //Lots of references
-gPoker.bots.names = {"Æ", "The Shark", "Multiplier", "The Ripper", "Big Boss", "Christ", "The Dude", "White", "Freeman", "Alpha", "Jetstream", "Beta", "Approaching Storm", "Afton", "Gamma", "White Wolf", "Narrator", "Rookie", "Snake Eater", "Mars", "Tea Sniffer", "Dango", "Folder", "Scarlet Devil", "Beep Boop", "Karen Slayer", "The Beach", "Silent", "May", "August", "Player", "Sol", "Risker", "Miller", "Slayer of Doom", "Doom", "Finger", /*v1.0.3*/ "Minge", "anonymous", "ByzrK", "Trickster", "Dummy", "Cthulhu", "Deadweight", "Quiet", "V1", "V2", "Deez", "Nuts", "Shalashaska", "Liquid", "Bandit", "Monkey", "Bloon", "Red", "La Li Lu Le Lo", "Impending Doom", "Engineer", "Gwent Expert", "GPoker sucks", "Bug", "Red Saber", "CUtIRBTree Overflow!", "Stack Overflow", "JC"}
+gPoker.bots.names = {"Æ", "The Shark", "Multiplier", "troit5ky", "The Ripper", "Big Boss", "Christ", "The Dude", "White", "Freeman", "Alpha", "Jetstream", "Beta", "Approaching Storm", "Afton", "Gamma", "White Wolf", "Narrator", "Rookie", "Snake Eater", "Mars", "Tea Sniffer", "Dango", "Folder", "Scarlet Devil", "Beep Boop", "Karen Slayer", "The Beach", "Silent", "May", "August", "Player", "Sol", "Risker", "Miller", "Slayer of Doom", "Doom", "Finger", /*v1.0.3*/ "Minge", "anonymous", "ByzrK", "Trickster", "Dummy", "Cthulhu", "Deadweight", "Quiet", "V1", "V2", "Deez", "Nuts", "Shalashaska", "Liquid", "Bandit", "Monkey", "Bloon", "Red", "La Li Lu Le Lo", "Impending Doom", "Engineer", "Gwent Expert", "GPoker sucks", "Bug", "Red Saber", "CUtIRBTree Overflow!", "Stack Overflow", "JC"}
 
 //Global Functions//
 
@@ -379,55 +379,55 @@ function gPoker.fancyDeckStrength(st,vl)
     local text = ""
     
     if st == 0 then
-        text = "High Card, " .. gPoker.rank[vl]
+        text = "Старшая карта, " .. gPoker.rank[vl]
     elseif st == 1 then
-        text = "Pair of "
+        text = "Пара "
         local pairText = ""
-        if vl == 4 then pairText = "Sixes" else pairText = gPoker.rank[vl] .. "s" end
+        if vl == 4 then pairText = "Шестёрок" else pairText = gPoker.rank[vl] end
 
         text = text .. pairText
     elseif st == 2 then
-        text = "Two Pairs, "
+        text = "Две Пары, "
         local highPair = math.floor(vl)
         local lowPair = math.Round((vl - highPair) * 100)
 
         local highPairStr, lowPairStr
 
-        if highPair == 4 then highPairStr = "Sixes" else highPairStr = gPoker.rank[highPair] .. "s" end
-        if lowPair == 4 then lowPairStr = "Sixes" else lowPairStr = gPoker.rank[lowPair] .. "s" end
+        if highPair == 4 then highPairStr = "Шестёрок" else highPairStr = gPoker.rank[highPair] end
+        if lowPair == 4 then lowPairStr = "Шестёрок" else lowPairStr = gPoker.rank[lowPair] end
 
-        local pairsText = highPairStr .. " and " .. lowPairStr 
+        local pairsText = highPairStr .. " и " .. lowPairStr
         text = text .. pairsText
     elseif st == 3 then
-        text = "Three of a Kind, "
+        text = "Сет, "
         local threeText = ""
-        if vl == 4 then threeText = "Sixes" else threeText = gPoker.rank[vl] .. "s" end
+        if vl == 4 then threeText = "Шестёрок" else threeText = gPoker.rank[vl] end
 
         text = text .. threeText
     elseif st == 4 then
-        text = "Straight, " .. gPoker.rank[vl] .. " high"
+        text = "Стрит, " .. gPoker.rank[vl] .. " старшая карта"
     elseif st == 5 then
-        text = "Flush, " .. gPoker.rank[vl] .. " high"
+        text = "Флэш, " .. gPoker.rank[vl] .. " старшая карта"
     elseif st == 6 then
-        text = "Full House, "
+        text = "Фул-Хаус, "
         local threeKind = math.floor(vl)
         local pair = math.Round((vl - threeKind) * 100)
         local threeKindStr, pairStr
 
-        if threeKind == 4 then threeKindStr = "Sixes" else threeKindStr = gPoker.rank[threeKind] .. "s" end
-        if pair == 4 then pairStr = "Sixes" else pairStr = gPoker.rank[pair] .. "s" end
+        if threeKind == 4 then threeKindStr = "Шестёрок" else threeKindStr = gPoker.rank[threeKind] end
+        if pair == 4 then pairStr = "Шестёрок" else pairStr = gPoker.rank[pair] end
 
-        local fullText =  threeKindStr .. " over " .. pairStr
+        local fullText =  threeKindStr .. " свыше " .. pairStr
         text = text .. fullText
     elseif st == 7 then
-        text = "Four of a Kind, "
+        text = "Каре, "
         local fourText = ""
-        if vl == 0 then fourText = "Deuces" elseif vl == 4 then fourText = "Sixes" else fourText = gPoker.rank[vl] .. "s" end
+        if vl == 0 then fourText = "Двоек" elseif vl == 4 then fourText = "Шестёрок" else fourText = gPoker.rank[vl] end
         text = text .. fourText
     elseif st == 8 then
-        text = "Straight Flush, " .. gPoker.rank[vl] .. " high"
+        text = "Стрит Флэш, " .. gPoker.rank[vl] .. " старшая карта"
     else
-        text = "Royal Flush"
+        text = "Флэш-Рояль"
     end
 
     return text
