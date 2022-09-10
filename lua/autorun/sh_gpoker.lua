@@ -422,7 +422,7 @@ function gPoker.fancyDeckStrength(st,vl)
     elseif st == 7 then
         text = "Каре, "
         local fourText = ""
-        if vl == 0 then fourText = "Двоек" elseif vl == 4 then fourText = "Шесть" else fourText = gPoker.rank[vl] end
+        if vl == 0 then fourText = "Два" elseif vl == 4 then fourText = "Шесть" else fourText = gPoker.rank[vl] end
         text = text .. fourText
     elseif st == 8 then
         text = "Стрит Флэш, " .. gPoker.rank[vl] .. " старшая карта"
